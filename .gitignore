@@ -1,5 +1,5 @@
-images/
+images/*
 inspo.txt
 upload.jpg
-BAK/
+.BAK/*
 _json.out
