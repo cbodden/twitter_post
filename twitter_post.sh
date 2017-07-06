@@ -43,9 +43,7 @@ function main()
 function img_create()
 {
     ## convert images wider than 1300 to 50%
-    if [[ "$(identify ${_IMG} \
-        | awk '{print $3}' \
-        | cut -dx -f1)" -gt "1300" ]]
+    if [[ "$(identify ${_IMG} | awk '{print $3}' | cut -dx -f1)" -gt "1300" ]]
     then
         convert -resize 50% ${_IMG} ${_L_DIR}resized.${_IMG_EXT}
         _IMG=${_L_DIR}resized.${_IMG_EXT}
@@ -114,7 +112,7 @@ function usage()
 }
 
 ## menu selection
-while getopts "dh:p:s:" OPT
+while getopts "dh:lp:s:" OPT
 do
     case "${OPT}" in
         'd')
@@ -124,6 +122,10 @@ do
         'h')
             ## hashtag / status
             HASHTAG=${OPTARG}
+            ;;
+        'l')
+            ## daemonize / loop / put in the background
+            _DAEM=1
             ;;
         'p')
             ## local dir
@@ -148,7 +150,12 @@ then
 fi
 shift $((OPTIND-1))
 
-main
+if [[ "${_DAEM}" -ne "1" ]]
+then
+    main
 img_create
 img_tweet
 cleanup
+else
+    echo
+fi
