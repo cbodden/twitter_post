@@ -109,7 +109,10 @@ function img_igram()
 
 function cleanup()
 {
-    mv ${_L_DIR}upload.jpg ${_L_DIR}posted/$(echo $(date "+%Y%m%d_%H%M%S").jpg)
+    # mv \
+        # ${_L_DIR}upload.jpg \
+        # ${_L_DIR}posted/$(echo $(date "+%Y%m%d_%H%M%S").jpg)
+    rm ${_L_DIR}upload.jpg
     rm ${_L_DIR}test.${_IMG_EXT}
     rm ${_L_DIR}resized.${_IMG_EXT}
 }
