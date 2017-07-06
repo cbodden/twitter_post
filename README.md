@@ -1,41 +1,49 @@
+```
+
+::::::::::::.::    .   .::::::::::::::::::::::::::::::.,:::::: :::::::..
+;;;;;;;;''''';;,  ;;  ;;;' ;;;;;;;;;;;'''';;;;;;;;'''';;;;'''' ;;;;``;;;;
+     [[      '[[, [[, [['  [[[     [[          [[      [[cccc   [[[,/[[['
+     $$        Y$c$$$c$P   $$$     $$          $$      $$""""   $$$$$$c
+     88,        "88"888    888     88,         88,     888oo,__ 888b "88bo,
+     MMM         "M "M"    MMM     MMM         MMM     """"YUMMMMMMM   "W"
+    ::::::::::.    ...      .::::::.::::::::::::
+     `;;;```.;;;.;;;;;;;.  ;;;`    `;;;;;;;;''''
+      `]]nnn]]',[[     \[[,'[==/[[[[,    [[
+       $$$""   $$$,     $$$  '''    $    $$
+       888o    "888,_ _,88P 88b    dP    88,
+mmmmmmmYMMMb     "YMMMMMP"   "YMmMY"     MMM
+
+```
+
 twitter_post
 ====
 
-twitter post shell script
+twitter and instagram image / quote poster
 
 
 Usage
 ----
+Base usage:
+```
+git clone git@github.com:cbodden/twitter_post.git
+cd twitter_post
+mv .twitterpostrc
+vi ~/.twitterpostrc
+./twitter_post.sh
+```
 
-<pre><code>
-
-             _            _ _   _                              _
-            | |___      _(_) |_| |_ ___ _ __   _ __   ___  ___| |_
-            | __\ \ /\ / / | __| __/ _ \ '__| | '_ \ / _ \/ __| __|
-            | |_ \ V  V /| | |_| ||  __/ |    | |_) | (_) \__ \ |_
-             \__| \_/\_/ |_|\__|\__\___|_|____| .__/ \___/|___/\__|
-                                        |_____|_|
-
-NAME
-    twitter_post.sh
-
-SYNOPSIS
-
-DESCRIPTION
+Base usage explained:
 
 
-</code></pre>
+
 
 Requirements
 ----
 
-- Bash
-- Twurl
-- Imagemagick
-- npm / ig-upload
-
-Todo / Add / Notes
-----
+- Bash (https://www.gnu.org/software/bash/)
+- Imagemagick (http://www.imagemagick.org/)
+- Twurl (https://github.com/twitter/twurl)
+- npm / ig-upload (https://www.npmjs.com/package/ig-upload)
 
 
 License and Author
