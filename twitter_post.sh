@@ -4,7 +4,7 @@
 _IMG_DIR="images/"
 
 ## text file
-_TXT_FILE="inspo.txt"
+_TXT_FILE="twitter_post.txt"
 
 ## grab random image
 _IMG_SHUF=$(shuf -n1 -e ${_IMG_DIR}* \
