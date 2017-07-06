@@ -43,9 +43,12 @@ function main()
 function img_create()
 {
     ## convert images wider than 1300 to 50%
-    if [[ "$(identify ${_IMG} | awk '{print $3}' | cut -dx -f1)" -gt "1300" ]]
+    if [[ "$(identify ${_IMG} \
+        | awk '{print $3}' \
+        | cut -dx -f1)" -gt "1300" ]]
     then
-        convert -resize 50% ${_IMG}
+        convert -resize 50% ${_IMG} ${_L_DIR}resized.${_IMG_EXT}
+        _IMG=${_L_DIR}resized.${_IMG_EXT}
     fi
 
     ## put text on image
@@ -64,6 +67,7 @@ function img_create()
     ## standardize all output images to jpg and same name plus rm others
     convert ${_L_DIR}test.${_IMG_EXT} ${_L_DIR}upload.jpg
     rm ${_L_DIR}test.${_IMG_EXT}
+    rm ${_L_DIR}resized.${_IMG_EXT}
 }
 
 function img_tweet()
@@ -110,7 +114,7 @@ function usage()
 }
 
 ## menu selection
-while getopts "ab:cd:ef:s:" OPT
+while getopts "dh:p:s:" OPT
 do
     case "${OPT}" in
         'd')
