@@ -1,15 +1,18 @@
 #!/usr/bin/env bash
 
-## check and source config file
-if [[ -e ~/.twitterpostrc ]]
-then
-    source ~/.twitterpostrc
-else
-    printf "%s\n" \
-        "Config file not found" \
-        "Exiting"
-    exit 1
-fi
+function default()
+{
+    ## check and source config file
+    if [[ -e ~/.twitterpostrc ]]
+    then
+        source ~/.twitterpostrc
+    else
+        printf "%s\n" \
+            "Config file not found" \
+            "Exiting"
+        exit 1
+    fi
+}
 
 function main()
 {
@@ -24,8 +27,13 @@ function main()
     _IMG=${_IMG_DIR}${_IMG_SHUF}
     _IMG_EXT=${_IMG##*.}
 
-    ## grab random line from text file
-    _TXT_SHUF=$(shuf -n1 ${_TXT_FILE})
+    ## grab random line from text file or fortune
+    arr[0]="$(shuf -n1 ${_TXT_FILE})"
+    arr[1]="$(fortune -s)"
+    rand=$(( RANDOM % 2 ))
+    # echo ${arr[$rand]}
+    # _TXT_SHUF=$(shuf -n1 ${_TXT_FILE})
+    _TXT_SHUF=$(echo ${arr[$rand]})
     _TXT=${_TXT_SHUF}
 
     ## use image width for caption shade below
@@ -34,6 +42,12 @@ function main()
 
 function img_create()
 {
+    ## convert images wider than 1300 to 50%
+    if [[ "$(identify ${_IMG} | awk '{print $3}' | cut -dx -f1)" -gt "1300" ]]
+    then
+        convert -resize 50% ${_IMG}
+    fi
+
     ## put text on image
     convert -background '#0008' \
         -fill white \
@@ -90,6 +104,45 @@ function cleanup()
     mv ${_L_DIR}upload.jpg ${_L_DIR}posted/$(echo $(date "+%Y%m%d_%H%M%S").jpg)
 }
 
+function usage()
+{
+    echo
+}
+
+## menu selection
+while getopts "ab:cd:ef:s:" OPT
+do
+    case "${OPT}" in
+        'd')
+            ## default option
+            default
+            ;;
+        'h')
+            ## hashtag / status
+            HASHTAG=${OPTARG}
+            ;;
+        'p')
+            ## local dir
+            _L_DIR=${OPTARG}
+            ;;
+        's')
+            ## sleep range
+            __SLEEP=${OPTARG}
+            ;;
+        *)
+            usage \
+                | less
+            exit 0
+            ;;
+    esac
+done
+if [[ ${OPTIND} -eq 1 ]]
+then
+    usage \
+        | less
+    exit 0
+fi
+shift $((OPTIND-1))
 
 main
 img_create
