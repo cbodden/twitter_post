@@ -1,16 +1,28 @@
 #!/usr/bin/env bash
 
+## check and source config file
+if [[ -e ~/.twitterpostrc ]]
+then
+    source ~/.twitterpostrc
+else
+    printf "%s\n" \
+        "Config file not found" \
+        "Exiting"
+    exit 1
+fi
+
 function main()
 {
     ## images directory local to this script
-    _IMG_DIR="images/"
+    _IMG_DIR="${_L_DIR}images/"
 
     ## text file
-    _TXT_FILE="twitter_post.txt"
+    _TXT_FILE="${_L_DIR}twitter_post.txt"
 
     ## grab random image
-    _IMG_SHUF=$(shuf -n1 -e ${_IMG_DIR}* \
-        | cut -d"/" -f2)
+    # _IMG_SHUF=$(shuf -n1 -e ${_IMG_DIR}* \
+    #     | cut -d"/" -f2)
+    _IMG_SHUF=$(basename $(shuf -n1 -e ${_IMG_DIR}*))
     _IMG=${_IMG_DIR}${_IMG_SHUF}
     _IMG_EXT=${_IMG##*.}
 
@@ -35,11 +47,11 @@ function img_create()
         ${_IMG} \
         +swap \
         -gravity center \
-        -composite test.${_IMG_EXT}
+        -composite ${_L_DIR}test.${_IMG_EXT}
 
     ## standardize all output images to jpg and same name plus rm others
-    convert test.${_IMG_EXT} upload.jpg
-    rm test.${_IMG_EXT}
+    convert ${_L_DIR}test.${_IMG_EXT} ${_L_DIR}upload.jpg
+    rm ${_L_DIR}test.${_IMG_EXT}
 }
 
 function img_tweet()
@@ -56,13 +68,13 @@ function img_tweet()
     ## upload and generate media_id_string
     twurl \
         -H upload.twitter.com "/1.1/media/upload.json" \
-        -f upload.jpg \
+        -f ${_L_DIR}upload.jpg \
         -F media \
         -X POST \
-        > _json.out
+        > ${_L_DIR}_json.out
 
     ## parse out "media_id_string" to pass to post
-    _M_ID=$(python -m json.tool _json.out \
+    _M_ID=$(python -m json.tool ${_L_DIR}_json.out \
         | grep "media_id_string" \
         | cut -d":" -f2 \
         | sed 's/[",]//g' \
@@ -72,12 +84,12 @@ function img_tweet()
     twurl \
         "/1.1/statuses/update.json" \
         -d "media_ids=${_M_ID}" \
-        -d "status=#${_TXT}"
+        -d "status=#${HASHTAG}"
 }
 
 function cleanup()
 {
-    mv upload.jpg posted/$(echo $(date "+%Y%m%d_%H%M%S").jpg)
+    mv ${_L_DIR}upload.jpg ${_L_DIR}posted/$(echo $(date "+%Y%m%d_%H%M%S").jpg)
 }
 
 
