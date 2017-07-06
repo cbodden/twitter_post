@@ -20,8 +20,6 @@ function main()
     _TXT_FILE="${_L_DIR}twitter_post.txt"
 
     ## grab random image
-    # _IMG_SHUF=$(shuf -n1 -e ${_IMG_DIR}* \
-    #     | cut -d"/" -f2)
     _IMG_SHUF=$(basename $(shuf -n1 -e ${_IMG_DIR}*))
     _IMG=${_IMG_DIR}${_IMG_SHUF}
     _IMG_EXT=${_IMG##*.}
@@ -84,7 +82,7 @@ function img_tweet()
     twurl \
         "/1.1/statuses/update.json" \
         -d "media_ids=${_M_ID}" \
-        -d "status=#${HASHTAG}"
+        -d "status=${HASHTAG}"
 }
 
 function cleanup()
