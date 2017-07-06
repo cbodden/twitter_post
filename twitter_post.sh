@@ -153,9 +153,29 @@ shift $((OPTIND-1))
 if [[ "${_DAEM}" -ne "1" ]]
 then
     main
-img_create
-img_tweet
-cleanup
+    img_create
+    img_tweet
+    cleanup
 else
-    echo
+    _TMPPID="$$"
+    case $(ps -o stat= -p $$) in
+        *+*)
+            ## if running in foreground
+            exec $0 $ disown $!
+            kill -9 ${_TMPPID} 2>&1
+            ;;
+        *)
+            ## if running in background
+            ;;
+    esac
+
+    while :;
+    do
+        main
+        img_create
+        img_tweet
+        cleanup
+        sleep $(shuf -i 0-${_SLEEP} -n 1)
+    done
+
 fi
