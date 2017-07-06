@@ -66,8 +66,6 @@ function img_create()
 
     ## standardize all output images to jpg and same name plus rm others
     convert ${_L_DIR}test.${_IMG_EXT} ${_L_DIR}upload.jpg
-    rm ${_L_DIR}test.${_IMG_EXT}
-    rm ${_L_DIR}resized.${_IMG_EXT}
 }
 
 function img_tweet()
@@ -106,6 +104,8 @@ function img_tweet()
 function cleanup()
 {
     mv ${_L_DIR}upload.jpg ${_L_DIR}posted/$(echo $(date "+%Y%m%d_%H%M%S").jpg)
+    rm ${_L_DIR}test.${_IMG_EXT}
+    rm ${_L_DIR}resized.${_IMG_EXT}
 }
 
 function usage()
