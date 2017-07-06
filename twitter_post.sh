@@ -64,4 +64,4 @@ _M_ID=$(python -m json.tool _json.out \
 twurl \
     "/1.1/statuses/update.json" \
     -d "media_ids=${_M_ID}" \
-    -d "status=#pitbull #inspirational #inspo"
+    -d "status=#${_TXT}"
