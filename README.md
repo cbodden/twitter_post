@@ -32,6 +32,7 @@ Requirements
 - Bash
 - Twurl
 - Imagemagick
+- npm / ig-upload
 
 Todo / Add / Notes
 ----

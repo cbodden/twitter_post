@@ -99,6 +99,14 @@ function img_tweet()
         -d "status=${HASHTAG}"
 }
 
+function img_igram()
+{
+    ## before uploading with ig-upload you need to run it like so:
+    ## ig-upload login
+    ## then you can run the bottom
+    ig-upload ${_L_DIR}upload.jpg "${HASHTAG}"
+}
+
 function cleanup()
 {
     mv ${_L_DIR}upload.jpg ${_L_DIR}posted/$(echo $(date "+%Y%m%d_%H%M%S").jpg)
@@ -155,6 +163,7 @@ then
     main
     img_create
     img_tweet
+    img_igram
     cleanup
 else
     _TMPPID="$$"
@@ -174,6 +183,7 @@ else
         main
         img_create
         img_tweet
+        img_igram
         cleanup
         sleep $(shuf -i 0-${_SLEEP} -n 1)
     done
