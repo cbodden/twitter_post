@@ -104,6 +104,8 @@ function img_igram()
     ## before uploading with ig-upload you need to run it like so:
     ## ig-upload login
     ## then you can run the bottom
+
+    ## upload and hashtag
     ig-upload ${_L_DIR}upload.jpg "${HASHTAG}"
 }
 
