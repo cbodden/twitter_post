@@ -2,8 +2,11 @@ function logd()
 {
     ## this function controls the logging function
     LOGFILE=/tmp/${NAME%%.*}.log
-    printf "%-20s %-10s %-10s %-10s %-10s\n" `date "+%Y%m%d_%H%M"` \
-        "[${1}]" "${2}" "${3}" "${4}" >> ${LOGFILE}
-    printf "%-20s %-10s %-10s %-10s %-10s\n" `date "+%Y%m%d_%H%M"` \
+    printf "%-20s %-10s %-10s %-10s %-10s\n" \
+        $(date "+%Y%m%d_%H%M") \
+        "[${1}]" "${2}" "${3}" "${4}" \
+        >> ${LOGFILE}
+    printf "%-20s %-10s %-10s %-10s %-10s\n" \
+        $(date "+%Y%m%d_%H%M") \
         "[${1}]" "${2}" "${3}" "${4}"
 }
