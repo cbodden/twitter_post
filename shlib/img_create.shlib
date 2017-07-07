@@ -32,6 +32,6 @@ function img_create()
     convert ${_L_DIR}test.${_IMG_EXT} ${_L_DIR}upload.jpg
 
     logd "Original image:" "${_IMG_SHUF}"
-    logd "Converted" "${_L_DIR}test.${_IMG_EXT}" "to" "${_L_DIR}upload.jpg"
-    logd "Created image:" "${_L_DIR}upload.jpg" "with quote:" "${_TXT}"
+    logd "Converted" "test.${_IMG_EXT}" "to" "${_L_DIR}upload.jpg"
+    logd "Created image:" "upload.jpg" "with quote:" "${_TXT}"
 }
