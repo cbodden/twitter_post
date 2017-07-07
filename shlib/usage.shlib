@@ -1,0 +1,71 @@
+function usage()
+{
+clear
+cat <<EOL
+
+NAME
+    ${NAME} - this is for adding and deleting images from imgur
+
+SYNOPSIS
+    climgur.sh [OPTION]... [FILE]...
+
+DESCRIPTION
+    Access your Imgur account from the command line.
+    Options can only be used one at a time for now.
+
+    -a [options]
+            Access account info and authentication
+            Options include:
+                auth
+                    This will do initial OAUTH2 auth
+                info
+                    This will show you the json info for your account
+
+    -d [options]
+            This is for folder / album clone, create, or delete
+            Options include:
+                create
+                    This will create an empty album into your account
+                delete
+                    This option will delete the selected album locally
+                download
+                    This option will ask for an album id and download the
+                    entire album to ${CLIMGUR_PATH}/(ALBUM ID)
+                list
+                    This option lists all the downloaded albums
+
+    -h      Show this file (usage).
+
+    -i [options]
+            This is to handle images manipulations
+            Options include :
+                delete
+                    This option shows a list of files with choice of delete
+                info
+                    This option will show the details for the image
+                screenshot
+                    This option takes a screenshot and uploads it
+                upload [path to file|path to folder]
+                    This option allows for file uploads
+
+    -l [options]
+            This handles showing what is in the log folder
+            Options include :
+                clean
+                    This option will remove the deleted files logs
+                list
+                    This option lists and shows log files located at:
+                    ${LOG_PATH}
+
+    -o      This opens image in either browser or feh
+
+    -s      This bypasses using "-i screenshot" for quick screenshots
+
+    -v      Show version
+
+    This all reads the .climgur.rc file which should be located in
+    $HOME/.climgur
+    A sample rc file is in the github repo which shows what should be in there.
+
+EOL
+}

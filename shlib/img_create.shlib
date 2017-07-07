@@ -1,0 +1,36 @@
+function img_create()
+{
+    ## convert images wider than 1300 to 50%
+    if [[ "$(identify ${_IMG} | awk '{print $3}' | cut -dx -f1)" -gt "1300" ]]
+    then
+        convert -resize 50% ${_IMG} ${_L_DIR}resized.${_IMG_EXT}
+        _IMG=${_L_DIR}resized.${_IMG_EXT}
+    fi
+
+    ## use image width for caption shade below
+    _WDTH=$(identify -format %w ${_IMG})
+    if [[ "${_WDTH}" -lt "$(identify -format %h ${_IMG})" ]]
+    then
+        _HGHT=$(identify -format %w ${_IMG})
+    else
+        _HGHT=$(identify -format %h ${_IMG})
+    fi
+
+    ## put text on image
+    convert -background '#0008' \
+        -fill white \
+        -gravity center \
+        -size $((${_WDTH}-20))x$((${_HGHT}/10)) \
+        caption:"${_TXT}" \
+        -font Helvetica \
+        ${_IMG} \
+        +swap \
+        -gravity center \
+        -composite ${_L_DIR}test.${_IMG_EXT}
+
+    ## standardize all output images to jpg and same name plus rm others
+    convert ${_L_DIR}test.${_IMG_EXT} ${_L_DIR}upload.jpg
+
+    logd "Converted" "${_L_DIR}test.${_IMG_EXT}" "to" "${_L_DIR}upload.jpg"
+    logd "Created image:" "${_L_DIR}upload.jpg" "with quote:" "${_TXT}"
+}

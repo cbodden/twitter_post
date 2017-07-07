@@ -1,0 +1,5 @@
+function pause()
+{
+    ## this function does exactly what you think
+    read -p "$*"
+}

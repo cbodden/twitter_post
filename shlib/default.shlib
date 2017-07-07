@@ -1,0 +1,13 @@
+function default()
+{
+    ## check and source config file
+    if [[ -e ~/.twitterpostrc ]]
+    then
+        source ~/.twitterpostrc
+    else
+        printf "%s\n" \
+            "Config file not found" \
+            "Exiting"
+        exit 1
+    fi
+}
