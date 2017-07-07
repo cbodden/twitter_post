@@ -1,5 +1,14 @@
 #!/usr/bin/env bash
 
+LC_ALL=C
+LANG=C
+NAME=$(basename $0)
+
+RED=$(tput setaf 1)
+BLU=$(tput setaf 4)
+GRN=$(tput setaf 40)
+CLR=$(tput sgr0)
+
 function default()
 {
     ## check and source config file
@@ -101,7 +110,8 @@ function img_tweet()
     twurl \
         "/1.1/statuses/update.json" \
         -d "media_ids=${_M_ID}" \
-        -d "status=${HASHTAG}"
+        -d "status=${HASHTAG}" \
+        > /dev/null
 }
 
 function img_igram()
@@ -119,9 +129,43 @@ function cleanup()
     mv \
         ${_L_DIR}upload.jpg \
         ${_L_DIR}posted/$(echo $(date "+%Y%m%d_%H%M%S").jpg)
-    # rm ${_L_DIR}upload.jpg
-    rm ${_L_DIR}test.${_IMG_EXT}
-    rm ${_L_DIR}resized.${_IMG_EXT}
+    # rm ${_L_DIR}upload.jpg 2> /dev/null
+    rm ${_L_DIR}test.${_IMG_EXT} 2> /dev/null
+    rm ${_L_DIR}resized.${_IMG_EXT} 2> /dev/null
+}
+
+function _RENAME()
+{
+    PTH="${_L_DIR}images/"
+
+    _DIR_CNT=$(ls -l ${PTH} \
+        | egrep -c '^-')
+
+    if [ "$_DIR_CNT" -lt "1000" ]
+    then
+        _MASK="%04d"
+    else
+        _MASK="%05d"
+    fi
+
+    for FILE in ${PTH}*
+    do
+        NUM=$(prntf "${_MASK}.${FILE##*.}" "${CNT}")
+        _FILE_TST=$(echo ${FILE%%.*} \
+            | sed 's/^.*\///')
+        if [ "${_FILE_TST}" != "${NUM%%.*}" ]
+        then
+            printf "%s\n" \
+                "Moving ${RED}${FILE}${CLR} to ${BLU}${PTH}${NUM}"
+            printf "${CLR}"
+            mv -n "${FILE}" "${PTH}${NUM}"
+        else
+            printf "%s\n" \
+                "Not moving ${GRN}${FILE}${CLR}"
+            printf "${CLR}"
+        fi
+        let CNT=$CNT+1
+    done
 }
 
 function usage()
@@ -130,7 +174,7 @@ function usage()
 }
 
 ## menu selection
-while getopts "dh:lp:s:" OPT
+while getopts "dh:lp:rs:" OPT
 do
     case "${OPT}" in
         'd')
@@ -149,6 +193,10 @@ do
             ## local dir
             _L_DIR=${OPTARG}
             ;;
+        'r')
+            ## rename images into numbered list
+            _RENAME
+            ;;
         's')
             ## sleep range
             __SLEEP=${OPTARG}
@@ -160,13 +208,25 @@ do
             ;;
     esac
 done
+
 if [[ ${OPTIND} -eq 1 ]]
 then
-    usage \
-        | less
+    # usage
     exit 0
 fi
 shift $((OPTIND-1))
+
+if [[ -z "${_L_DIR}" ]]
+then
+    # usage
+    exit 0
+fi
+
+if [[ -z "${HASHTAG}" ]]
+then
+    # usage
+    exit 0
+fi
 
 if [[ "${_DAEM}" -ne "1" ]]
 then
