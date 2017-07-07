@@ -13,7 +13,7 @@ function main()
 
     ## grab random line from text file or fortune
     arr[0]="$(shuf -n1 ${_TXT_FILE})"
-    arr[1]="$(fortune -s)"
+    arr[1]="$(fortune -s | sed 's/-.*//')"
     rand=$(( RANDOM % 2 ))
     # echo ${arr[$rand]}
     # _TXT_SHUF=$(shuf -n1 ${_TXT_FILE})
