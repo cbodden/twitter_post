@@ -7,7 +7,8 @@ NAME
     ${NAME} - this is for adding and deleting images from imgur
 
 SYNOPSIS
-    climgur.sh [OPTION]... [FILE]...
+    ${NAME} [-dhlprs] [-d] [-h hashtags] [-l]
+            [-p dir] [-r] [-s time]
 
 DESCRIPTION
     Access your Imgur account from the command line.
@@ -63,6 +64,7 @@ DESCRIPTION
 
     -v      Show version
 
+NOTES
     This all reads the .climgur.rc file which should be located in
     $HOME/.climgur
     A sample rc file is in the github repo which shows what should be in there.

@@ -47,7 +47,7 @@ do
             ;;
         's')
             ## sleep range
-            __SLEEP=${OPTARG}
+            _SLEEP=${OPTARG}
             ;;
         *)
             usage \
@@ -67,8 +67,6 @@ then
     fi
 fi
 
-
-
 if [[ "${_RNM}" -eq 1 ]]
 then
     _RENAME
@@ -83,17 +81,14 @@ then
     #img_igram
     cleanup
 else
-    _TMPPID="$$"
-    case $(ps -o stat= -p $$) in
-        *+*)
-            ## if running in foreground
-            exec $0 $ disown $!
-            kill -9 ${_TMPPID} 2>&1
-            ;;
-        *)
-            ## if running in background
-            ;;
-    esac
+    if [[ -z "${_SLEEP}" ]]
+    then
+        usage
+        exit 1
+    fi
+
+    clear
+    printf "\n%s\n" "Beginning ${NAME} loop."
 
     while :;
     do
@@ -102,7 +97,6 @@ else
         img_tweet
         #img_igram
         cleanup
-        sleep $(shuf -i 0-${_SLEEP} -n 1)
+        sleep $(shuf -i 0-${_SLEEP} -n 1)m
     done
-
 fi
