@@ -33,8 +33,66 @@ vi ~/.twitterpostrc
 ```
 
 Base usage explained:
+```
+NAME
+    twitter_post.sh - this is for creating and tweeting images with quotes on them
 
+SYNOPSIS
+    twitter_post.sh [-cdhlprs] [-c <path to file>] [-d] [-h hashtags] [-l]
+            [-p dir] [-r] [-s time]
 
+DESCRIPTION
+    Access your Imgur account from the command line.
+    Options can only be used one at a time for now.
+
+    Create an image with comment that are pulled from a local repo.
+    Comments can be pulled from either a local file or from fortune.
+
+OPTIONS
+
+    -c [path to file]
+            This option is to specify the direct path to the rc file.
+
+    -d      This option defaults to the rc file located at ~.
+
+    -h [hashtag(s) / status]
+            If either (-c) or (-d) are not specified, this option must be
+            specified with either a status or hashtag(s) for twitter.
+
+    -l
+            This option keeps the script looping.
+            If using this option you must specify (-s).
+
+    -p [path to local dir]
+            This option is used if (-c) & (-d) are not used.
+            You must specify the path that contains the image dir with
+                this option.
+
+    -r
+            This option is used with either (-c) or (-d).
+            It converts all the images in the images folder into 
+                a numbered list.
+
+    -s [minutes]
+            This option is used with (-l).
+            You set the number of minutes used as the range for looping.
+                ex.: -s 60
+                Means that it will randomely sleep from 1-60 minutes until
+                    the next iteration.
+
+NOTES
+    Before running the script run whats below to grant twitter access:
+        twurl \
+            -u password \
+            -p password \
+            --consumer-key key \
+            --consumer-secret secret
+    All the info here can be gotten on twitter or if you follow the twurl
+        documentation at : https://github.com/twitter/twurl
+
+    This script uses ~/.twitterpostrc as default but can be changed.
+    A sample rc file is in the repo.
+```
 
 
 Requirements
