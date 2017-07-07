@@ -15,7 +15,7 @@ source shlib/img_create.shlib
 source shlib/img_tweet.shlib
 source shlib/img_gram.shlib
 source shlib/cleanup.shlib
-source shlib/_RENAME.shlib
+source shlib/rename.shlib
 source shlib/logd.shlib
 source shlib/pause.shlib
 source shlib/usage.shlib
