@@ -35,10 +35,6 @@ function main()
     # _TXT_SHUF=$(shuf -n1 ${_TXT_FILE})
     _TXT_SHUF=$(echo ${arr[$rand]})
     _TXT=${_TXT_SHUF}
-
-    ## use image width for caption shade below
-    _WDTH=$(identify -format %w ${_IMG})
-    _HGHT=$(identify -format %h ${_IMG})
 }
 
 function img_create()
@@ -50,11 +46,20 @@ function img_create()
         _IMG=${_L_DIR}resized.${_IMG_EXT}
     fi
 
+    ## use image width for caption shade below
+    _WDTH=$(identify -format %w ${_IMG})
+    if [[ "${_WDTH}" -lt "$(identify -format %h ${_IMG})" ]]
+    then
+        _HGHT=$(identify -format %w ${_IMG})
+    else
+        _HGHT=$(identify -format %h ${_IMG})
+    fi
+
     ## put text on image
     convert -background '#0008' \
         -fill white \
         -gravity center \
-        -size ${_WDTH}x$((${_HGHT}/10)) \
+        -size $((${_WDTH}-20))x$((${_HGHT}/10)) \
         caption:"${_TXT}" \
         -font Helvetica \
         ${_IMG} \
@@ -62,8 +67,6 @@ function img_create()
         -gravity center \
         -composite ${_L_DIR}test.${_IMG_EXT}
 
-        #-pointsize 20 \
-        # -size ${_WDTH}x30 \
     ## standardize all output images to jpg and same name plus rm others
     convert ${_L_DIR}test.${_IMG_EXT} ${_L_DIR}upload.jpg
 }
@@ -113,10 +116,10 @@ function img_igram()
 
 function cleanup()
 {
-    # mv \
-        # ${_L_DIR}upload.jpg \
-        # ${_L_DIR}posted/$(echo $(date "+%Y%m%d_%H%M%S").jpg)
-    rm ${_L_DIR}upload.jpg
+    mv \
+        ${_L_DIR}upload.jpg \
+        ${_L_DIR}posted/$(echo $(date "+%Y%m%d_%H%M%S").jpg)
+    # rm ${_L_DIR}upload.jpg
     rm ${_L_DIR}test.${_IMG_EXT}
     rm ${_L_DIR}resized.${_IMG_EXT}
 }
