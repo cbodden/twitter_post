@@ -38,6 +38,7 @@ function main()
 
     ## use image width for caption shade below
     _WDTH=$(identify -format %w ${_IMG})
+    _HGHT=$(identify -format %h ${_IMG})
 }
 
 function img_create()
@@ -53,15 +54,16 @@ function img_create()
     convert -background '#0008' \
         -fill white \
         -gravity center \
-        -size ${_WDTH}x30 \
+        -size ${_WDTH}x$((${_HGHT}/10)) \
         caption:"${_TXT}" \
         -font Helvetica \
-        -pointsize 20 \
         ${_IMG} \
         +swap \
         -gravity center \
         -composite ${_L_DIR}test.${_IMG_EXT}
 
+        #-pointsize 20 \
+        # -size ${_WDTH}x30 \
     ## standardize all output images to jpg and same name plus rm others
     convert ${_L_DIR}test.${_IMG_EXT} ${_L_DIR}upload.jpg
 }
@@ -168,7 +170,7 @@ then
     main
     img_create
     img_tweet
-    img_igram
+    #img_igram
     cleanup
 else
     _TMPPID="$$"
@@ -188,7 +190,7 @@ else
         main
         img_create
         img_tweet
-        img_igram
+        #img_igram
         cleanup
         sleep $(shuf -i 0-${_SLEEP} -n 1)
     done
