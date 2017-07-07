@@ -4,70 +4,63 @@ clear
 cat <<EOL
 
 NAME
-    ${NAME} - this is for adding and deleting images from imgur
+    ${NAME} - this is for creating and tweeting images with quotes on them
 
 SYNOPSIS
-    ${NAME} [-dhlprs] [-d] [-h hashtags] [-l]
+    ${NAME} [-cdhlprs] [-c <path to file>] [-d] [-h hashtags] [-l]
             [-p dir] [-r] [-s time]
 
 DESCRIPTION
     Access your Imgur account from the command line.
     Options can only be used one at a time for now.
 
-    -a [options]
-            Access account info and authentication
-            Options include:
-                auth
-                    This will do initial OAUTH2 auth
-                info
-                    This will show you the json info for your account
+    Create an image with comment that are pulled from a local repo.
+    Comments can be pulled from either a local file or from fortune.
 
-    -d [options]
-            This is for folder / album clone, create, or delete
-            Options include:
-                create
-                    This will create an empty album into your account
-                delete
-                    This option will delete the selected album locally
-                download
-                    This option will ask for an album id and download the
-                    entire album to ${CLIMGUR_PATH}/(ALBUM ID)
-                list
-                    This option lists all the downloaded albums
+OPTIONS
 
-    -h      Show this file (usage).
+    -c [path to file]
+            This option is to specify the direct path to the rc file.
 
-    -i [options]
-            This is to handle images manipulations
-            Options include :
-                delete
-                    This option shows a list of files with choice of delete
-                info
-                    This option will show the details for the image
-                screenshot
-                    This option takes a screenshot and uploads it
-                upload [path to file|path to folder]
-                    This option allows for file uploads
+    -d      This option defaults to the rc file located at ~.
 
-    -l [options]
-            This handles showing what is in the log folder
-            Options include :
-                clean
-                    This option will remove the deleted files logs
-                list
-                    This option lists and shows log files located at:
-                    ${LOG_PATH}
+    -h [hashtag(s) / status]
+            If either (-c) or (-d) are not specified, this option must be
+            specified with either a status or hashtag(s) for twitter.
 
-    -o      This opens image in either browser or feh
+    -l
+            This option keeps the script looping.
+            If using this option you must specify (-s).
 
-    -s      This bypasses using "-i screenshot" for quick screenshots
+    -p [path to local dir]
+            This option is used if (-c) & (-d) are not used.
+            You must specify the path that contains the image dir with
+                this option.
 
-    -v      Show version
+    -r
+            This option is used with either (-c) or (-d).
+            It converts all the images in the images folder into 
+                a numbered list.
+
+    -s [minutes]
+            This option is used with (-l).
+            You set the number of minutes used as the range for looping.
+                ex.: -s 60
+                Means that it will randomely sleep from 1-60 minutes until
+                    the next iteration.
 
 NOTES
-    This all reads the .climgur.rc file which should be located in
-    $HOME/.climgur
-    A sample rc file is in the github repo which shows what should be in there.
+    Before running the script run whats below to grant twitter access:
+        twurl \
+            -u password \
+            -p password \
+            --consumer-key key \
+            --consumer-secret secret
+    All the info here can be gotten on twitter or if you follow the twurl
+        documentation at : https://github.com/twitter/twurl
+
+    This script uses ~/.twitterpostrc as default but can be changed.
+    A sample rc file is in the repo.
 
 EOL
 }
