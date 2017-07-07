@@ -18,7 +18,7 @@
 twitter_post
 ====
 
-twitter and instagram image / quote poster
+twitter image / quote creator and post mechanism
 
 
 Usage
