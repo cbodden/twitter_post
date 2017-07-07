@@ -21,9 +21,19 @@ source shlib/pause.shlib
 source shlib/usage.shlib
 
 ## menu selection
-while getopts "dh:lp:rs:" OPT
+while getopts ":c:dh:lp:rs:" OPT
 do
     case "${OPT}" in
+        'c')
+            ## path to rc file
+            if [[ -f "${OPTARG}" ]]
+            then
+                source ${OPTARG}
+            else
+                usage
+                exit1
+            fi
+            ;;
         'd')
             ## default option
             _SET_DEF=1
