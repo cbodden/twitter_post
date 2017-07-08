@@ -16,15 +16,18 @@
 
 LC_ALL=C
 LANG=C
-NAME=$(basename $0)
+readonly NAME=$(basename $0)
+readonly PROGNAME=$(basename $0)
+readonly PROGDIR=$(readlink -m $(dirname $0))
 
-RED=$(tput setaf 1)
-BLU=$(tput setaf 4)
-GRN=$(tput setaf 40)
-CLR=$(tput sgr0)
+readonly RED=$(tput setaf 1)
+readonly BLU=$(tput setaf 4)
+readonly GRN=$(tput setaf 40)
+readonly CLR=$(tput sgr0)
 
 source shlib/default.shlib
 source shlib/main.shlib
+source shlib/info.shlib
 source shlib/img_create.shlib
 source shlib/img_test.shlib
 source shlib/img_tweet.shlib
@@ -36,7 +39,8 @@ source shlib/pause.shlib
 source shlib/usage.shlib
 
 ## menu selection
-while getopts ":c:de:f:h:lp:rs:t" OPT
+readonly OPTIONS=":c:de:f:h:lp:rs:tv"
+while getopts "${OPTIONS}" OPT
 do
 	case "${OPT}" in
 		'c')
@@ -86,13 +90,21 @@ do
 			## set test mode
 			_TEST=1
 			;;
-		*)
-			usage \
-				| less
+		'v')
+			## show version info
+			_info
 			exit 0
 			;;
 	esac
 done
+
+if [ $OPTIND -eq 1 ]
+then
+	usage \
+		| less
+	exit 0
+fi
+
 shift $((OPTIND-1))
 
 main

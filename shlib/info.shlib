@@ -1,0 +1,18 @@
+# help text - this shows git info
+function _info()
+{
+    printf "%s\n" \
+        "${PROGNAME%.*} is an image / quote creator and post mechanism." \
+        "source can be found at : " \
+        "  $(git config --get remote.origin.url)" \
+        "currently at commit : " \
+        "  $(git rev-parse HEAD)" \
+        "total number of commits : " \
+        "  $(git rev-list --all --count)" \
+        "lines committed : " \
+        "$(git ls-files \
+            | xargs wc -l \
+            | tail -1)" \
+        "revision number is : " \
+        "  $(awk '/REVISION/ {print $3}' ${PROGDIR}/${PROGNAME})"
+}
