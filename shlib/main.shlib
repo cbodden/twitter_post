@@ -1,36 +1,86 @@
 function main()
 {
-    ## images directory local to this script
-    _IMG_DIR="${_L_DIR}images/"
+	if [[ "${_SET_DEF}" -ne "1" ]]
+	then
+		if [[ -z "${_L_DIR}" ]] || [[ -z "${HASHTAG}" ]]
+		then
+			usage
+			exit 1
+		fi
+	fi
 
-    ## text file
-    _TXT_FILE="${_L_DIR}twitter_post.txt"
+	## images directory local to this script
+	_IMG_DIR="${_L_DIR}images/"
 
-    ## grab random image
-    _IMG_SHUF=$(basename $(shuf -n1 -e ${_IMG_DIR}*))
-    _IMG=${_IMG_DIR}${_IMG_SHUF}
-    _IMG_EXT=${_IMG##*.}
+	## text file
+	_TXT_FILE="${_L_DIR}twitter_post.txt"
 
-    if [[ "${_MAIN}" -eq "1" ]]
-    then
-        _TXT_SHUF=$(echo $(shuf -n1 ${_TXT_FILE}))
-    elif [[ "${_MAIN}" -eq "2" ]]
-    then
-        _TXT_SHUF=$(echo $(fortune -s | sed 's/-.*//'))
-    elif [[ "${_MAIN}" -eq "3" ]] || [[ -z "${_MAIN}" ]]
-    then
-        ## grab random line from text file or fortune
-        arr[0]="$(shuf -n1 ${_TXT_FILE})"
-        arr[1]="$(fortune -s | sed 's/-.*//')"
-        rand=$(( RANDOM % 2 ))
-        _TXT_SHUF=$(echo ${arr[$rand]})
-    elif [[ "${_MAIN}" -eq "4" ]] && [[ ! -z "${_MAIN_QU}" ]]
-    then
-        _TXT_SHUF="${_MAIN_QU}"
-    else
-        usage
-        exit 1
-    fi
+	## grab random image
+	_IMG_SHUF=$(basename $(shuf -n1 -e ${_IMG_DIR}*))
+	_IMG=${_IMG_DIR}${_IMG_SHUF}
+	_IMG_EXT=${_IMG##*.}
 
-    _TXT=${_TXT_SHUF}
+	if [[ "${_MAIN}" -eq "1" ]]
+	then
+		_TXT_SHUF=$(echo $(shuf -n1 ${_TXT_FILE}))
+	elif [[ "${_MAIN}" -eq "2" ]]
+	then
+		_TXT_SHUF=$(echo $(fortune -s | sed 's/-.*//'))
+	elif [[ "${_MAIN}" -eq "3" ]] || [[ -z "${_MAIN}" ]]
+	then
+		## grab random line from text file or fortune
+		arr[0]="$(shuf -n1 ${_TXT_FILE})"
+		arr[1]="$(fortune -s | sed 's/-.*//')"
+		rand=$(( RANDOM % 2 ))
+		_TXT_SHUF=$(echo ${arr[$rand]})
+	elif [[ "${_MAIN}" -eq "4" ]] && [[ ! -z "${_MAIN_QU}" ]]
+	then
+		_TXT_SHUF="${_MAIN_QU}"
+	else
+		usage
+		exit 1
+	fi
+
+	_TXT=${_TXT_SHUF}
+
+
+	if [[ "${_TEST}" -eq 1 ]]
+	then
+		img_create
+		img_test
+		cleanup
+		exit 0
+	fi
+
+	if [[ "${_RNM}" -eq 1 ]]
+	then
+		_RENAME
+		exit 0
+	fi
+
+	if [[ "${_DAEM}" -ne "1" ]]
+	then
+		img_create
+		img_tweet
+		#img_igram
+		cleanup
+	else
+		if [[ -z "${_SLEEP}" ]]
+		then
+			usage
+			exit 1
+		fi
+
+		clear
+		printf "\n%s\n" "Beginning ${NAME} loop."
+
+		while :;
+		do
+			img_create
+			img_tweet
+			#img_igram
+			cleanup
+			sleep $(shuf -i 0-${_SLEEP} -n 1)m
+		done
+	fi
 }
