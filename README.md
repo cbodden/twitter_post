@@ -32,7 +32,7 @@ vi ~/.twitterpostrc
 ./twitter_post.sh
 ```
 
-Base usage explained:
+Usage explained:
 ```
 NAME
     ${NAME} - this is for creating and tweeting images with quotes on them
