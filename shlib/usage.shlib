@@ -54,11 +54,15 @@ OPTIONS
             It converts all the images in the images folder into 
                 a numbered list.
 
-    -s [minutes]
+    -s [minutes or range of minutes]
             This option is used with (-l).
             You set the number of minutes used as the range for looping.
                 ex.: -s 60
-                Means that it will randomely sleep from 1-60 minutes until
+                Means that it will randomely sleep from 0-60 minutes until
+                    the next iteration.
+                or
+                ex.: -s "30-90"
+                Means that it will randomely sleep from 30-90 minutes until
                     the next iteration.
 
     -t

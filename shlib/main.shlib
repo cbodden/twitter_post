@@ -70,6 +70,13 @@ function main()
 			usage
 			exit 1
 		fi
+		
+		if [[ "${_SLEEP}" == *"-"* ]]
+		then
+			_SLEEP_MOD=${_SLEEP}
+		else
+			_SLEEP_MOD="0-${_SLEEP}"
+		fi
 
 		clear
 		printf "\n%s\n" "Beginning ${NAME} loop."
@@ -80,7 +87,7 @@ function main()
 			img_tweet
 			#img_igram
 			cleanup
-			sleep $(shuf -i 0-${_SLEEP} -n 1)m
+			sleep $(shuf -i ${_SLEEP_MOD} -n 1)m
 		done
 	fi
 }
