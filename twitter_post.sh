@@ -1,5 +1,19 @@
 #!/usr/bin/env bash
 
+#===============================================================================
+#          FILE: twitter_post.sh
+#         USAGE: ./twitter_post.sh
+#   DESCRIPTION: twitter image / quote creator and post mechanism
+#       OPTIONS: some so far
+#  REQUIREMENTS: bash, twurl, imagemagick
+#          BUGS: some
+#         NOTES: better documentation in the README file
+#        AUTHOR: cesar@pissedoffadmins.com
+#  ORGANIZATION: pissedoffadmins.com
+#       CREATED: 06 Jul 2017
+#      REVISION: 10
+#===============================================================================
+
 LC_ALL=C
 LANG=C
 NAME=$(basename $0)
