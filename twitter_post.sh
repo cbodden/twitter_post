@@ -36,7 +36,7 @@ source shlib/pause.shlib
 source shlib/usage.shlib
 
 ## menu selection
-while getopts ":c:dh:lp:rs:t" OPT
+while getopts ":c:de:f:h:lp:rs:t" OPT
 do
     case "${OPT}" in
         'c')
@@ -54,6 +54,14 @@ do
             _SET_DEF=1
             default
             ;;
+		'e')
+			## choose fortune, text, or both
+			_MAIN=${OPTARG}
+			;;
+		'f')
+			## if using -e, this is needed
+			_MAIN_QU=${OPTARG}
+			;;
         'h')
             ## hashtag / status
             HASHTAG=${OPTARG}

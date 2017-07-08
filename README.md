@@ -55,6 +55,18 @@ OPTIONS
 
     -d      This option defaults to the rc file located at ~.
 
+    -e [1,2,3,4]
+            This option controls where the quotes are sourced.
+            You must specify one of these at runtime.
+            Options:
+                1       Shuffle from text file
+                2       Use "fortune -s"
+                3       Randomize between text file and shuffle
+                4       Use your own quote - if used you must specify (-f)
+
+    -f ["quote"]
+            This option must be used if you specify (-e 4).
+
     -h [hashtag(s) / status]
             If either (-c) or (-d) are not specified, this option must be
             specified with either a status or hashtag(s) for twitter.
