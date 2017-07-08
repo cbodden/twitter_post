@@ -77,8 +77,8 @@ OPTIONS
 
     -p [path to local dir]
             This option is used if (-c) & (-d) are not used.
-            You must specify the path that contains the image dir with
-                this option.
+            You must specify the path that contains the image dir and text file
+				with this option.
 
     -r
             This option is used with either (-c) or (-d).
