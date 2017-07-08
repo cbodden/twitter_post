@@ -35,10 +35,10 @@ vi ~/.twitterpostrc
 Base usage explained:
 ```
 NAME
-    twitter_post.sh - this is for creating and tweeting images with quotes on them
+    ${NAME} - this is for creating and tweeting images with quotes on them
 
 SYNOPSIS
-    twitter_post.sh [-cdhlprs] [-c <path to file>] [-d] [-h hashtags] [-l]
+    ${NAME} [-cdhlprs] [-c <path to file>] [-d] [-h hashtags] [-l]
             [-p dir] [-r] [-s time]
 
 DESCRIPTION
@@ -70,7 +70,7 @@ OPTIONS
 
     -r
             This option is used with either (-c) or (-d).
-            It converts all the images in the images folder into 
+            It converts all the images in the images folder into
                 a numbered list.
 
     -s [minutes]
@@ -79,6 +79,10 @@ OPTIONS
                 ex.: -s 60
                 Means that it will randomely sleep from 1-60 minutes until
                     the next iteration.
+
+    -t
+            This option enables testing mode.
+            Needs to be used with either (-d) or both (-h) & (-p).
 
 NOTES
     Before running the script run whats below to grant twitter access:

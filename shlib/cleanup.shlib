@@ -7,5 +7,7 @@ function cleanup()
     rm ${_L_DIR}test.${_IMG_EXT} 2> /dev/null
     rm ${_L_DIR}resized.${_IMG_EXT} 2> /dev/null
 
+    ## from img_test.shlib
+    rm ${_L_DIR}test.* ${_L_DIR}resized.* 2> /dev/null
     logd "Cleanup"
 }

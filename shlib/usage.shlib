@@ -49,6 +49,10 @@ OPTIONS
                 Means that it will randomely sleep from 1-60 minutes until
                     the next iteration.
 
+    -t
+            This option enables testing mode.
+            Needs to be used with either (-d) or both (-h) & (-p).
+
 NOTES
     Before running the script run whats below to grant twitter access:
         twurl \

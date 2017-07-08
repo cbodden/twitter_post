@@ -26,6 +26,7 @@ CLR=$(tput sgr0)
 source shlib/default.shlib
 source shlib/main.shlib
 source shlib/img_create.shlib
+source shlib/img_test.shlib
 source shlib/img_tweet.shlib
 source shlib/img_gram.shlib
 source shlib/cleanup.shlib
@@ -35,7 +36,7 @@ source shlib/pause.shlib
 source shlib/usage.shlib
 
 ## menu selection
-while getopts ":c:dh:lp:rs:" OPT
+while getopts ":c:dh:lp:rs:t" OPT
 do
     case "${OPT}" in
         'c')
@@ -73,6 +74,10 @@ do
             ## sleep range
             _SLEEP=${OPTARG}
             ;;
+		't')
+			## set test mode
+			_TEST=1
+			;;
         *)
             usage \
                 | less
@@ -89,6 +94,15 @@ then
         usage
         exit 1
     fi
+fi
+
+if [[ "${_TEST}" -eq 1 ]]
+then
+	main
+	img_create
+    img_test
+	cleanup
+    exit 0
 fi
 
 if [[ "${_RNM}" -eq 1 ]]
