@@ -100,8 +100,7 @@ done
 
 if [ $OPTIND -eq 1 ]
 then
-	usage \
-		| less
+	usage
 	exit 0
 fi
 
