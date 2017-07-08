@@ -25,18 +25,13 @@ readonly BLU=$(tput setaf 4)
 readonly GRN=$(tput setaf 40)
 readonly CLR=$(tput sgr0)
 
-source shlib/default.shlib
-source shlib/main.shlib
-source shlib/info.shlib
-source shlib/img_create.shlib
-source shlib/img_test.shlib
-source shlib/img_tweet.shlib
-source shlib/img_gram.shlib
-source shlib/cleanup.shlib
-source shlib/rename.shlib
-source shlib/logd.shlib
-source shlib/pause.shlib
-source shlib/usage.shlib
+## sourcing shlibs
+_SRC_SHLIB="cleanup default img_create img_gram img_test img_tweet info logd \
+	main pause rename usage"
+for ITER in ${_SRC_SHLIB}
+do
+	source ${PROGDIR}/shlib/${ITER}.shlib
+done
 
 ## menu selection
 readonly OPTIONS=":c:de:f:h:lp:rs:tv"
