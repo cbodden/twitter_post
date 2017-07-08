@@ -1,7 +1,7 @@
 function logd()
 {
     ## this function controls the logging function
-    LOGFILE=/tmp/${NAME%%.*}.log
+    LOGFILE=${PROGDIR}/${PROGNAME%%.*}.log
     printf "%-14s %-25s %-25s %-15s %-10s\n" \
         $(date "+%Y%m%d_%H%M") \
         "[${1}]" "${2}" "${3}" "${4}" \
