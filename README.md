@@ -102,12 +102,9 @@ OPTIONS
 
 NOTES
     Before running the script run whats below to grant twitter access:
-        twurl \
-            -u password \
-            -p password \
-            --consumer-key key \
-            --consumer-secret secret
-    All the info here can be gotten on twitter or if you follow the twurl
+        twurl -u user -p password --consumer-key key --consumer-secret secret
+
+	All the info here can be gotten on twitter or if you follow the twurl
         documentation at : https://github.com/twitter/twurl
 
     This script uses ~/.twitterpostrc as default but can be changed.
