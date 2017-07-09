@@ -86,11 +86,11 @@ function main()
 			_SLEEP_MOD_OUT=$(echo $(shuf -i ${_SLEEP_MOD} -n 1))
 			logd "Sleeping for:" "${_SLEEP_MOD_OUT} minutes"
 			sleep ${_SLEEP_MOD_OUT}m
-			logd
 			img_create
 			img_tweet
 			#img_igram
 			cleanup
+			main
 		done
 	fi
 }
