@@ -30,6 +30,7 @@ function img_tweet()
         -d "media_ids=${_M_ID}" \
         -d "status=${HASHTAG}" \
         > /dev/null
+        # > ${_L_DIR}_debug.out
 
     logd "Tweeted image:" "${_L_DIR}upload.jpg"
 }

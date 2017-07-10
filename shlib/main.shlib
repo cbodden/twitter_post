@@ -46,6 +46,7 @@ function main()
 
 	if [[ "${_TEST}" -eq 1 ]]
 	then
+		_user
 		img_create
 		img_test
 		cleanup
@@ -60,6 +61,7 @@ function main()
 
 	if [[ "${_DAEM}" -ne "1" ]]
 	then
+		_user
 		img_create
 		img_tweet
 		#img_igram
@@ -70,7 +72,7 @@ function main()
 			usage
 			exit 1
 		fi
-		
+
 		if [[ "${_SLEEP}" == *"-"* ]]
 		then
 			_SLEEP_MOD=${_SLEEP}
@@ -78,6 +80,7 @@ function main()
 			_SLEEP_MOD="0-${_SLEEP}"
 		fi
 
+		_user
 		clear
 		printf "\n%s\n" "Beginning ${NAME} loop."
 
