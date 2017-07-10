@@ -45,7 +45,7 @@ do
 				source ${OPTARG}
 			else
 				usage
-				exit1
+				exit 1
 			fi
 			;;
 		'd')

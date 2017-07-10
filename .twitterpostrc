@@ -1,2 +1,18 @@
+## specify you hashtag / quote here (not the image quote)
 HASHTAG="PUT HASHTAGS HERE"
+## path to folder that contains images directory
 _L_DIR="PUT PATH TO SCRIPT DIR HERE"
+
+## these can be grabbed from : https://apps.twitter.com
+OWNER="CHANGE ME"
+OWNER_ID="CHANGE ME"
+CONSUMER_KEY="CHANGE ME"
+CONSUMER_SECRET="CHANGE ME"
+ACCESS_TOKEN="CHANGE ME"
+ACCESS_TOKEN_SECRET="CHANGE ME"
+
+## below should not be changed
+## same as owner from : https://apps.twitter.com
+_USER_MOD="${OWNER}"
+## consumer key from : https://apps.twitter.com
+_USER_KEY="${CONSUMER_KEY}"

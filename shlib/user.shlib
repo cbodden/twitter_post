@@ -1,53 +1,60 @@
 function _user()
 {
-    local _ACCT=$((twurl accounts | awk '!/^ /') 2>&1)
 
-    if [ "${_ACCT}" == "You must authorize first" ]
+    if [[ -z "${_USER_MOD}" ]] || [[ -z  "${_USER_KEY}" ]]
     then
-        echo "${_ACCT}, nukka"
-        exit 1
-    fi
+        local _ACCT=$((twurl accounts | awk '!/^ /') 2>&1)
 
-    local _CNT=0
-    local arr=()
-    local arr=($_ACCT)
-
-    if [[ "${#arr[@]}" -gt 1 ]]
-    then
-        echo "${#arr[@]} users in system :"
-        while [[ "${_CNT}" -lt "${#arr[*]}" ]]
-        do
-            echo "[${_CNT}] ${arr[${_CNT}]}"
-            local _CNT=$((_CNT+1))
-        done
-
-        printf "%s\n" "" \
-            "Choose user by number : "
-        read -a _USER
-
-        ## test selection
-        if [[ "${_USER}" -ge "${#arr[*]}" ]]
+        if [ "${_ACCT}" == "You must authorize first" ]
         then
-            echo "Invalid selection"
+            echo "${_ACCT}, nukka"
             exit 1
         fi
 
-        printf "%s\n" "" \
-            "You selected : ${arr[${_USER}]}"
+        local _CNT=0
+        local arr=()
+        local arr=($_ACCT)
 
-        local _USER_MOD=${arr[${_USER}]}
-        echo ${_USER_MOD}
-        local _USER_KEY=$(grep -A1 "${_USER_MOD}" ~/.twurlrc \
-            | head -n 2 \
-            | tail -n 1 \
-            | sed 's/^.* //;s/;*.$//')
-        echo ${_USER_KEY}
+        if [[ "${#arr[@]}" -gt 1 ]]
+        then
+            echo "${#arr[@]} users in system :"
+            while [[ "${_CNT}" -lt "${#arr[*]}" ]]
+            do
+                echo "[${_CNT}] ${arr[${_CNT}]}"
+                local _CNT=$((_CNT+1))
+            done
 
-        twurl set default ${_USER_MOD} ${_USER_KEY}
-        twurl accounts
-        logd "Set user:" "${_USER_MOD}"
+            printf "%s\n" "" \
+                "Choose user by number : "
+            read -a _USER
+
+            ## test selection
+            if [[ "${_USER}" -ge "${#arr[*]}" ]]
+            then
+                echo "Invalid selection"
+                exit 1
+            fi
+
+            printf "%s\n" "" \
+                "You selected : ${arr[${_USER}]}"
+
+            _USER_MOD=${arr[${_USER}]}
+            echo ${_USER_MOD}
+            _USER_KEY=$(grep -A1 "${_USER_MOD}" ~/.twurlrc \
+                | head -n 2 \
+                | tail -n 1 \
+                | sed 's/^.* //;s/;*.$//')
+            echo ${_USER_KEY}
+
+            twurl set default ${_USER_MOD} ${_USER_KEY}
+            twurl accounts
+            logd "Set user:" "${_USER_MOD}"
+        else
+            echo "only one account. good to go"
+            logd "User good"
+        fi
     else
-        echo "only one account. good to go"
-        logd "User good"
+        twurl set default ${_USER_MOD} ${_USER_KEY}
+        logd "Set user:" "${_USER_MOD}"
     fi
 }

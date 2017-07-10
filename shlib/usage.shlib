@@ -26,11 +26,12 @@ OPTIONS
 
     -e [1,2,3,4]
             This option controls where the quotes are sourced.
-            You must specify one of these at runtime.
+            If none of these are specified at runtime then it defaults
+                to [3].
             Options:
                 1       Shuffle from text file
                 2       Use "fortune -s"
-                3       Randomize between text file and shuffle
+                3       Randomize between text file and shuffle (DEFAULT)
                 4       Use your own quote - if used you must specify (-f)
 
     -f ["quote"]
@@ -77,7 +78,37 @@ NOTES
         documentation at : https://github.com/twitter/twurl
 
     This script uses ~/.twitterpostrc as default but can be changed.
-    A sample rc file is in the repo.
+    A sample rc file is in the repo with default values that need to
+		be changed.
+
+    This script also assumes that you have a folder (path) that contains
+        an images folder and if using a text file with quotes then a file
+        named ${NAME}.txt in the same path as the images
+        ex:
+            /path/to/images/
+            /path/to/${NAME}.txt
+        In ${NAME}.txt, all quotes are on their own individual lines.
+
+EXAMPLES
+    Run once in default mode:
+        ${PROGNAME} -d
+
+    Run in testing mode with defaults set:
+        ${PROGNAME} -d -t
+
+    Run once with a different path to rc file:
+        ${PROGNAME} -c /path/to/rcfile
+
+    Run in looped mode with different path to rc file in range of 90-180
+        minutes:
+        ${PROGNAME} -c /path/to/rcfile -l -s 90-180
+
+    Run in looped mode with default rc file in range of 90-180 minutes:
+        ${PROGNAME} -d -l -s 90-180
+
+    Sort images in images folder to a numbered list using the default rc:
+        ${PROGNAME} -d -r
+
 
 EOL
 }

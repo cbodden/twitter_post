@@ -57,17 +57,18 @@ OPTIONS
 
     -e [1,2,3,4]
             This option controls where the quotes are sourced.
-            You must specify one of these at runtime.
+            If none of these are specified at runtime then it defaults
+                to [3].
             Options:
                 1       Shuffle from text file
                 2       Use "fortune -s"
-                3       Randomize between text file and shuffle
+                3       Randomize between text file and shuffle (DEFAULT)
                 4       Use your own quote - if used you must specify (-f)
 
     -f ["quote"]
             This option must be used if you specify (-e 4).
 
-    -h [hashtag(s) / status]
+    -h ["hashtag(s) / status"]
             If either (-c) or (-d) are not specified, this option must be
             specified with either a status or hashtag(s) for twitter.
 
@@ -78,7 +79,7 @@ OPTIONS
     -p [path to local dir]
             This option is used if (-c) & (-d) are not used.
             You must specify the path that contains the image dir and text file
-				with this option.
+                with this option.
 
     -r
             This option is used with either (-c) or (-d).
@@ -104,11 +105,40 @@ NOTES
     Before running the script run whats below to grant twitter access:
         twurl -u user -p password --consumer-key key --consumer-secret secret
 
-	All the info here can be gotten on twitter or if you follow the twurl
+    All the info here can be gotten on twitter or if you follow the twurl
         documentation at : https://github.com/twitter/twurl
 
     This script uses ~/.twitterpostrc as default but can be changed.
-    A sample rc file is in the repo.
+    A sample rc file is in the repo with default values that need to
+		be changed.
+
+    This script also assumes that you have a folder (path) that contains
+        an images folder and if using a text file with quotes then a file
+        named twitter_post.sh.txt in the same path as the images
+        ex:
+            /path/to/images/
+            /path/to/twitter_post.sh.txt
+        In twitter_post.sh.txt, all quotes are on their own individual lines.
+
+EXAMPLES
+    Run once in default mode:
+        twitter_post.sh -d
+
+    Run in testing mode with defaults set:
+        twitter_post.sh -d -t
+
+    Run once with a different path to rc file:
+        twitter_post.sh -c /path/to/rcfile
+
+    Run in looped mode with different path to rc file in range of 90-180
+        minutes:
+        twitter_post.sh -c /path/to/rcfile -l -s 90-180
+
+    Run in looped mode with default rc file in range of 90-180 minutes:
+        twitter_post.sh -d -l -s 90-180
+
+    Sort images in images folder to a numbered list using the default rc:
+        twitter_post.sh -d -r
 ```
 
 
@@ -117,7 +147,7 @@ Requirements
 
 - Bash (https://www.gnu.org/software/bash/)
 - Imagemagick (http://www.imagemagick.org/)
-- Twurl (https://github.com/twitter/twurl)
+- Gem / Twurl (https://github.com/twitter/twurl)
 - npm / ig-upload (https://www.npmjs.com/package/ig-upload)
 
 
