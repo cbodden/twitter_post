@@ -164,6 +164,4 @@ function woeid_prnt()
         HASHTAG="${HASHTAG} ${_WRD//_/ }"
         _CNT_RND=$((_CNT_RND+1))
     done
-
-    echo "${HASHTAG}"
 }
