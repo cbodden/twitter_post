@@ -27,14 +27,14 @@ readonly CLR=$(tput sgr0)
 
 ## sourcing shlibs
 _SRC_SHLIB="cleanup default img_create img_gram img_test img_tweet info logd \
-	main pause rename usage user"
+	main pause rename usage user woied"
 for ITER in ${_SRC_SHLIB}
 do
 	source ${PROGDIR}/shlib/${ITER}.shlib
 done
 
 ## menu selection
-readonly OPTIONS=":c:de:f:h:lp:rs:tv"
+readonly OPTIONS=":c:de:f:h:lm:p:rs:tv"
 while getopts "${OPTIONS}" OPT
 do
 	case "${OPT}" in
@@ -68,6 +68,10 @@ do
 		'l')
 			## daemonize / loop / put in the background
 			_DAEM=1
+			;;
+		'm')
+			## insert random three hashtags / search from random location
+			_WOEID_SET_RNDM=${OPTARG}
 			;;
 		'p')
 			## local dir

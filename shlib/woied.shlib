@@ -1,109 +1,174 @@
 function woeid_list()
 {
-    local _TXT="/home/cbodden/git/mine/twitter_post/etc/_woied.txt"
-    if [ ! -f "${_TXT}" ]
+    _WOEID_TXT_FILE="${PROGDIR}/etc/_woied.txt"
+    if [ ! -f "${_WOEID_TXT_FILE}" ]
     then
-        echo "${_TXT} not found"
+        echo "${_WOEID_TXT_FILE} not found"
         exit 1
     fi
 
-    local _CNT=1
-    _WOEID_ARR=()
-    local _LINES=$(tput lines)
+    if [[ -z "${_WOEID_SET_RNDM}" ]]
+    then
+        exit 1
+    fi
 
-    for ITER in $(cat ${_TXT})
-    do
-        _WOEID_ARR[${_CNT}]=$(echo ${ITER})
-        _CNT=$((_CNT+1))
-    done
+    if [[ "${_WOEID_SET_RNDM}" -eq 0 ]]
+    then
+        local _CNT=1
+        _WOEID_ARR=()
+        local _LINES=$(tput lines)
 
-    _CNT=1
-    _CNT_WI=${#_WOEID_ARR[@]}
+        for ITER in $(cat ${_WOEID_TXT_FILE})
+        do
+            _WOEID_ARR[${_CNT}]=$(echo ${ITER})
+            _CNT=$((_CNT+1))
+        done
 
-    printf "[%3s] %.21s %.26s %-10s \n" \
-        "Num" \
-        "Country .............................." \
-        "Location ............................." \
-        "WOEID"
-    printf "%.59s \n" \
-        " ====================================================================="
+        _CNT=1
+        _CNT_WI=${#_WOEID_ARR[@]}
 
-    while [ ${_CNT} -le ${_CNT_WI} ]
-    do
-        local _FRNT=$(echo ${_WOEID_ARR[${_CNT}]} \
-            | cut -d":" -f2 \
-            | sed 's/_/ /')
-        local _MID=$(echo ${_WOEID_ARR[${_CNT}]} \
-            | cut -d":" -f3 \
-            | sed 's/_/ /')
-        local _END=$(echo ${_WOEID_ARR[${_CNT}]} \
-            | cut -d":" -f4 )
+        printf "[%3s] %.21s %.26s %-10s \n" \
+            "Num" \
+            "Country .............................." \
+            "Location ............................." \
+            "WOEID"
+        printf "%.59s \n" \
+            " ================================================================"
 
-        if (( ${_CNT} % $((_LINES - 4)) == 0 ))
-        then
-            printf "[%3d] %.21s %.26s %-10s \n" \
-                "${_CNT}" \
-                "${_FRNT} .............................." \
-                "${_MID} ..............................." \
-                "${_END}"
-            printf "%*s\n" 40  "---- Press  Enter ----"
-            read -p "$*"
-            printf "[%3s] %.21s %.26s %-10s \n" \
-                "Num" \
-                "Country .............................." \
-                "Location ............................." \
-                "WOEID"
-            printf "%.59s \n" \
-                " ============================================================"
-        else
-            printf "[%3d] %.21s %.26s %-10s \n" \
-                "${_CNT}" \
-                "${_FRNT} .............................." \
-                "${_MID} ..............................." \
-                "${_END}"
-        fi
-        let _CNT+=1
-    done
+        while [ ${_CNT} -le ${_CNT_WI} ]
+        do
+            local _FRNT=$(echo ${_WOEID_ARR[${_CNT}]} \
+                | cut -d":" -f2 \
+                | sed 's/_/ /')
+            local _MID=$(echo ${_WOEID_ARR[${_CNT}]} \
+                | cut -d":" -f3 \
+                | sed 's/_/ /')
+            local _END=$(echo ${_WOEID_ARR[${_CNT}]} \
+                | cut -d":" -f4 )
+
+            if (( ${_CNT} % $((_LINES - 4)) == 0 ))
+            then
+                printf "[%3d] %.21s %.26s %-10s \n" \
+                    "${_CNT}" \
+                    "${_FRNT} .............................." \
+                    "${_MID} ..............................." \
+                    "${_END}"
+                printf "%*s\n" 40  "---- Press  Enter ----"
+                read -p "$*"
+                printf "[%3s] %.21s %.26s %-10s \n" \
+                    "Num" \
+                    "Country .............................." \
+                    "Location ............................." \
+                    "WOEID"
+                printf "%.59s \n" \
+                    " ========================================================="
+            else
+                printf "[%3d] %.21s %.26s %-10s \n" \
+                    "${_CNT}" \
+                    "${_FRNT} .............................." \
+                    "${_MID} ..............................." \
+                    "${_END}"
+            fi
+            let _CNT+=1
+        done
+        _WOEID_RND_IN=0
+        woeid_sel
+    fi
+
+    if [[ "${_WOEID_SET_RNDM}" -eq 1 ]]
+    then
+        _WOEID_RND_IN=1
+        woeid_sel
+    fi
+
 }
 
 function woeid_sel()
 {
-    printf "\n%s" \
-        "Choose Country / Location by selecting NUM or 0 for random : "
-    read -a _WOEID_IN
-    printf "%s" "You selected : "
-    case ${_WOEID_IN} in
-        ''|*[!0-9]*)
-            printf "Invalid Choice\n"
-            ;;
-        *)
-            if [[ ${_WOEID_IN} -le ${_CNT_WI} && ${_WOEID_IN} -gt 0 ]]
-            then
-                _END=$(echo ${_WOEID_ARR[${_WOEID_IN}]} \
-                    | cut -d":" -f4 )
-                printf "[${_WOEID_IN}] ${_END}\n"
-            elif [[ ${_WOEID_IN} -eq 0 ]]
-            then
-                printf "random it is\n"
-                local _WOEID_RND=$(( $RANDOM % ${#_WOEID_ARR[*]} ))
-                local _SHUFF=${_WOEID_RND}
-                _END=$(echo ${_WOEID_ARR[${_SHUFF}]} \
-                    | cut -d":" -f4 )
-                printf "[${_WOEID_IN}] ${_END}\n"
-            else
+    if [[ "${_WOEID_RND_IN}" -eq 0 ]]
+    then
+        printf "\n%s" \
+            "Choose Country / Location by selecting NUM or 0 for random : "
+        read -a _WOEID_IN
+        printf "%s" "You selected : "
+        case ${_WOEID_IN} in
+            ''|*[!0-9]*)
                 printf "Invalid Choice\n"
-            fi
-            ;;
-    esac
-    printf "\n"
+                exit 0
+                break
+                ;;
+            *)
+                if [[ ${_WOEID_IN} -le ${_CNT_WI} && ${_WOEID_IN} -gt 0 ]]
+                then
+                    _END=$(echo ${_WOEID_ARR[${_WOEID_IN}]} \
+                        | cut -d":" -f4 )
+                    printf "[${_WOEID_IN}] ${_END}\n"
+                else
+                    printf "Invalid Choice\n"
+                    exit 1
+                    break
+                fi
+                ;;
+        esac
+        printf "\n"
+        woeid_twurl
+    fi
+
+    if [[ "${_WOEID_RND_IN}" -eq 1 ]]
+    then
+        local _CNT=1
+        _WOEID_ARR=()
+
+        for ITER in $(cat ${_WOEID_TXT_FILE})
+        do
+            _WOEID_ARR[${_CNT}]=$(echo ${ITER})
+            _CNT=$((_CNT+1))
+        done
+
+        local _WOEID_RND=$(( $RANDOM % ${#_WOEID_ARR[*]} ))
+        local _SHUFF=${_WOEID_RND}
+        _END=$(echo ${_WOEID_ARR[${_SHUFF}]} \
+            | cut -d":" -f4 )
+        woeid_twurl
+    fi
 }
 
 function woeid_twurl()
 {
+    >${_TMP_F1}
     twurl "/1.1/trends/place.json?id=${_END}" \
-        | python -mjson.tool
+        | python -mjson.tool \
+        | grep -e "name" \
+        | sed 's/^[ \t]*//;s/"name": //;s/[",]//g;s/ /_/;/\\/d' \
+        | tee -a ${_TMP_F1} > /dev/null
+    woeid_prnt
 }
 
-woeid_list
-woeid_sel
-woeid_twurl
+function woeid_prnt()
+{
+    local _TST_ARR=()
+    local _CNT=0
+
+    for ITER in $(cat ${_TMP_F1})
+    do
+        _TST_ARR[${_CNT}]=$(echo ${ITER})
+        _CNT=$((_CNT+1))
+    done
+
+    echo "entries: ${#_TST_ARR[*]}"
+
+    local _CNT_RND=0
+
+    while [ ${_CNT_RND} -lt 3 ]
+    do
+        _TST_RND=$(( $RANDOM % ${#_TST_ARR[*]} ))
+        _SHUF=${_TST_RND}
+        _WRD=${_TST_ARR[${_SHUF}]}
+        echo "${_CNT_RND} ${_TST_RND} ${_WRD}"
+        _STRNG="${_WRD//_/ } ${_STRNG}"
+        _CNT_RND=$((_CNT_RND+1))
+    done
+
+
+    echo "${_STRNG}"
+}
