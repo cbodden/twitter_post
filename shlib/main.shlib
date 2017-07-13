@@ -76,6 +76,10 @@ function main()
 	if [[ "${_DAEM}" -ne "1" ]]
 	then
 		_user
+		if [[ "${_WOEID_SET_RNDM}" -eq 0 ]] || [[ "${_WOEID_SET_RNDM}" -eq 1 ]] 
+		then
+			woeid_list
+		fi
 		img_create
 		img_tweet
 		#img_igram
@@ -103,6 +107,10 @@ function main()
 			_SLEEP_MOD_OUT=$(echo $(shuf -i ${_SLEEP_MOD} -n 1))
 			logd "Sleeping for:" "${_SLEEP_MOD_OUT} minutes"
 			sleep ${_SLEEP_MOD_OUT}m
+			if [[ "${_WOEID_SET_RNDM}" -eq 0 ]] || [[ "${_WOEID_SET_RNDM}" -eq 1 ]] 
+			then
+				woeid_list
+			fi
 			img_create
 			img_tweet
 			#img_igram
