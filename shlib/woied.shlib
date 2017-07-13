@@ -1,5 +1,3 @@
-#!/usr/bin/env bash
-
 function woeid_list()
 {
     local _TXT="/home/cbodden/git/mine/twitter_post/etc/_woied.txt"
@@ -70,7 +68,7 @@ function woeid_list()
 
 function woeid_sel()
 {
-    printf "%s" "" \
+    printf "\n%s" \
         "Choose Country / Location by selecting NUM or 0 for random : "
     read -a _WOEID_IN
     printf "%s" "You selected : "
@@ -81,10 +79,17 @@ function woeid_sel()
         *)
             if [[ ${_WOEID_IN} -le ${_CNT_WI} && ${_WOEID_IN} -gt 0 ]]
             then
-                printf "${_WOEID_IN} ${_WOEID_ARR[${_WOEID_IN}]}\n"
+                _END=$(echo ${_WOEID_ARR[${_WOEID_IN}]} \
+                    | cut -d":" -f4 )
+                printf "[${_WOEID_IN}] ${_END}\n"
             elif [[ ${_WOEID_IN} -eq 0 ]]
             then
                 printf "random it is\n"
+                local _WOEID_RND=$(( $RANDOM % ${#_WOEID_ARR[*]} ))
+                local _SHUFF=${_WOEID_RND}
+                _END=$(echo ${_WOEID_ARR[${_SHUFF}]} \
+                    | cut -d":" -f4 )
+                printf "[${_WOEID_IN}] ${_END}\n"
             else
                 printf "Invalid Choice\n"
             fi
@@ -93,5 +98,12 @@ function woeid_sel()
     printf "\n"
 }
 
+function woeid_twurl()
+{
+    twurl "/1.1/trends/place.json?id=${_END}" \
+        | python -mjson.tool
+}
+
 woeid_list
 woeid_sel
+woeid_twurl
