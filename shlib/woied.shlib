@@ -148,6 +148,7 @@ function woeid_prnt()
 {
     local _TST_ARR=()
     local _CNT=0
+    local _CNT_RND=0
 
     for ITER in $(cat ${_TMP_F1})
     do
@@ -155,20 +156,14 @@ function woeid_prnt()
         _CNT=$((_CNT+1))
     done
 
-    echo "entries: ${#_TST_ARR[*]}"
-
-    local _CNT_RND=0
-
     while [ ${_CNT_RND} -lt 3 ]
     do
         _TST_RND=$(( $RANDOM % ${#_TST_ARR[*]} ))
         _SHUF=${_TST_RND}
         _WRD=${_TST_ARR[${_SHUF}]}
-        echo "${_CNT_RND} ${_TST_RND} ${_WRD}"
-        _STRNG="${_WRD//_/ } ${_STRNG}"
+        HASHTAG="${HASHTAG} ${_WRD//_/ }"
         _CNT_RND=$((_CNT_RND+1))
     done
 
-
-    echo "${_STRNG}"
+    echo "${HASHTAG}"
 }

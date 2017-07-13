@@ -9,5 +9,6 @@ function cleanup()
 
     ## from img_test.shlib
     rm ${_L_DIR}test.* ${_L_DIR}resized.* 2> /dev/null
+    rm ${_TMP_F1} ${_TMP_F2} ${PIDFILE} 2> /dev/null
     logd "Cleanup"
 }
