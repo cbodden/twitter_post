@@ -47,16 +47,16 @@ function main()
 
 	_TXT=${_TXT_SHUF}
 
-	if [[ "${_WOEID_SET_RNDM}" -eq 0 ]] || [[ "${_WOEID_SET_RNDM}" -eq 1 ]] 
-	then
-		_user
-		woeid_list
-		img_create
-		img_tweet
-		#img_igram
-		cleanup
-		exit 0
-	fi
+	##if [[ "${_WOEID_SET_RNDM}" -eq 0 ]] || [[ "${_WOEID_SET_RNDM}" -eq 1 ]] 
+	##then
+	##	_user
+	##	woeid_list
+	##	img_create
+	##	img_tweet
+	##	#img_igram
+	##	cleanup
+	##	exit 0
+	##fi
 
 	if [[ "${_TEST}" -eq 1 ]]
 	then
