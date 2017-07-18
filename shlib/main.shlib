@@ -79,6 +79,9 @@ function main()
 		if [[ "${_WOEID_SET_RNDM}" -eq 0 ]] || [[ "${_WOEID_SET_RNDM}" -eq 1 ]] 
 		then
 			woeid_list
+			woeid_sel
+			woeid_twurl
+			woeid_prnt
 		fi
 		img_create
 		img_tweet
@@ -110,6 +113,9 @@ function main()
 			if [[ "${_WOEID_SET_RNDM}" -eq 0 ]] || [[ "${_WOEID_SET_RNDM}" -eq 1 ]] 
 			then
 				woeid_list
+				woeid_sel
+				woeid_twurl
+				woeid_prnt
 			fi
 			img_create
 			img_tweet

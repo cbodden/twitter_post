@@ -72,15 +72,12 @@ function woeid_list()
             let _CNT+=1
         done
         _WOEID_RND_IN=0
-        woeid_sel
     fi
 
     if [[ "${_WOEID_SET_RNDM}" -eq 1 ]]
     then
         _WOEID_RND_IN=1
-        woeid_sel
     fi
-
 }
 
 function woeid_sel()
@@ -111,7 +108,6 @@ function woeid_sel()
                 ;;
         esac
         printf "\n"
-        woeid_twurl
     fi
 
     if [[ "${_WOEID_RND_IN}" -eq 1 ]]
@@ -129,7 +125,6 @@ function woeid_sel()
         local _SHUFF=${_WOEID_RND}
         _END=$(echo ${_WOEID_ARR[${_SHUFF}]} \
             | cut -d":" -f4 )
-        woeid_twurl
     fi
 }
 
@@ -141,7 +136,6 @@ function woeid_twurl()
         | grep -e "name" \
         | sed 's/^[ \t]*//;s/"name": //;s/[",]//g;s/ /_/;/\\/d' \
         | tee -a ${_TMP_F1} > /dev/null
-    woeid_prnt
 }
 
 function woeid_prnt()
