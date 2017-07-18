@@ -27,7 +27,7 @@ readonly CLR=$(tput sgr0)
 
 ## sourcing shlibs
 _SRC_SHLIB="cleanup default img_create img_gram img_test img_tweet info logd \
-	main pause rename usage user woied"
+	main pause rename usage user woeid"
 for ITER in ${_SRC_SHLIB}
 do
 	source ${PROGDIR}/shlib/${ITER}.shlib
