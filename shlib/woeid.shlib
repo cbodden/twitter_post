@@ -1,6 +1,6 @@
 function woeid_list()
 {
-    _WOEID_TXT_FILE="${PROGDIR}/etc/_woied.txt"
+    _WOEID_TXT_FILE="${PROGDIR}/etc/_woeid.txt"
     if [ ! -f "${_WOEID_TXT_FILE}" ]
     then
         echo "${_WOEID_TXT_FILE} not found"
